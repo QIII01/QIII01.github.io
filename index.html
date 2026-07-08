@@ -514,6 +514,155 @@
       font-weight: 900;
     }
 
+    .learn-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .learn-sidebar {
+      padding: 24px;
+      position: sticky;
+      top: 96px;
+    }
+
+    .learn-sidebar h3 {
+      font-size: 18px;
+      margin-bottom: 14px;
+    }
+
+    .learn-nav {
+      display: grid;
+      gap: 8px;
+    }
+
+    .learn-nav a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: color .18s ease, background .18s ease, border-color .18s ease;
+    }
+
+    .learn-nav a:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.06);
+      border-color: var(--line);
+    }
+
+    .learn-body {
+      display: grid;
+      gap: 18px;
+    }
+
+    .learn-block {
+      padding: 28px;
+    }
+
+    .learn-block h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+
+    .learn-block > p,
+    .learn-block li {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .learn-block > p {
+      margin-bottom: 14px;
+    }
+
+    .learn-block ul,
+    .learn-block ol {
+      padding-left: 22px;
+      display: grid;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .learn-block li strong {
+      color: #fff;
+    }
+
+    .code-block {
+      margin: 14px 0;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(0,0,0,0.38);
+      border: 1px solid rgba(255,255,255,0.12);
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #f8fafc;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .tip-box {
+      margin-top: 14px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(247, 184, 1, 0.08);
+      border: 1px solid rgba(247, 184, 1, 0.28);
+      color: #f3e8c7;
+      line-height: 1.75;
+      font-size: 15px;
+    }
+
+    .tip-box strong {
+      color: var(--gold);
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 14px;
+    }
+
+    .compare-table th,
+    .compare-table td {
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .compare-table th {
+      background: rgba(239,35,60,0.12);
+      color: #ffd6dd;
+      font-weight: 800;
+    }
+
+    .compare-table td {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .status-badge {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(239,35,60,0.14);
+      border: 1px solid rgba(239,35,60,0.35);
+      color: #ffd6dd;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
     .contact {
       padding: 38px;
       display: grid;
@@ -593,6 +742,14 @@
         grid-template-columns: 1fr;
       }
 
+      .learn-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .learn-sidebar {
+        position: static;
+      }
+
       .arrow {
         display: none;
       }
@@ -648,6 +805,7 @@
       <div class="nav-links">
         <a href="#about">关于</a>
         <a href="#record">记录</a>
+        <a href="#git">Git</a>
         <a href="#blog">博客</a>
         <a href="#contact">联系</a>
       </div>
@@ -724,9 +882,9 @@
 
       <div class="cards">
         <article class="card">
-          <div class="emoji">🧠</div>
-          <h3>正在学习</h3>
-          <p>把复杂的东西拆小，一点点搞懂。今天会一点，明天就多一点。</p>
+          <div class="emoji">📦</div>
+          <h3>Git 入门</h3>
+          <p>从 init、commit 到 push，再到换电脑 clone。第一次把代码推上 GitHub 的完整笔记。</p>
         </article>
         <article class="card">
           <div class="emoji">🌙</div>
@@ -753,6 +911,15 @@
       </div>
 
       <div class="blog-list">
+        <a class="post" href="#git">
+          <small>学习笔记</small>
+          <div>
+            <h3>Git 入门：从本地到 GitHub</h3>
+            <p>配置身份、第一次 commit、关联 remote、处理 push 被拒绝、换电脑 clone。</p>
+          </div>
+          <span class="arrow">→</span>
+        </a>
+
         <a class="post" href="javascript:void(0)">
           <small>第一篇</small>
           <div>
@@ -782,6 +949,230 @@
       </div>
     </section>
 
+    <section id="git" class="container reveal">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Git Notes</div>
+          <h2>Git 学习笔记</h2>
+        </div>
+        <p class="section-note">
+          整理自我第一次把个人主页推上 GitHub 的真实过程。踩过的坑、搞懂的命令，都写在这里。
+        </p>
+      </div>
+
+      <div class="learn-grid">
+        <aside class="learn-sidebar glass">
+          <h3>目录</h3>
+          <nav class="learn-nav">
+            <a href="#git-what">Git 是什么</a>
+            <a href="#git-setup">第一次配置</a>
+            <a href="#git-first-commit">本地第一次提交</a>
+            <a href="#git-remote">关联远程仓库</a>
+            <a href="#git-push">推送到 GitHub</a>
+            <a href="#git-rejected">push 被拒绝怎么办</a>
+            <a href="#git-new-pc">换电脑怎么拉代码</a>
+            <a href="#git-daily">日常更新流程</a>
+            <a href="#git-zip-vs-clone">ZIP 和 clone 的区别</a>
+          </nav>
+        </aside>
+
+        <div class="learn-body">
+          <article id="git-what" class="learn-block glass">
+            <span class="status-badge">Step 0</span>
+            <h3>Git 是什么？</h3>
+            <p>
+              Git 是一个<strong>版本控制工具</strong>。你可以把它理解成项目的「时光机」：
+              每次 commit 都是一次快照，随时能回到之前的版本，也能把本地改动同步到 GitHub。
+            </p>
+            <ul>
+              <li><strong>本地仓库</strong>：你电脑上的项目 + `.git` 隐藏文件夹（记录历史）</li>
+              <li><strong>远程仓库</strong>：GitHub 上的同名项目（比如 `QIII01.github.io`）</li>
+              <li><strong>常见命令</strong>：`add` 暂存 → `commit` 提交 → `push` 上传</li>
+            </ul>
+            <div class="tip-box">
+              <strong>小提示：</strong>个人主页用 GitHub Pages 时，仓库名通常是
+              <code>用户名.github.io</code>，推送成功后网站地址是
+              <code>https://用户名.github.io</code>。
+            </div>
+          </article>
+
+          <article id="git-setup" class="learn-block glass">
+            <span class="status-badge">Step 1</span>
+            <h3>第一次配置身份</h3>
+            <p>Git 需要知道「谁」在提交。每台新电脑只需配置一次：</p>
+            <div class="code-block">git config --global user.name "你的名字"
+git config --global user.email "你的GitHub邮箱"
+
+# 检查是否成功
+git config --global user.name
+git config --global user.email</div>
+            <p>邮箱建议和 GitHub 账号一致，提交记录会正确关联到你的账号。</p>
+          </article>
+
+          <article id="git-first-commit" class="learn-block glass">
+            <span class="status-badge">Step 2</span>
+            <h3>本地第一次提交</h3>
+            <p>如果文件夹里还没有 Git 历史，需要先初始化，再把文件加入暂存区并提交：</p>
+            <div class="code-block">cd 你的项目目录
+git init
+git add index.html
+git status
+git commit -m "Initial commit: personal homepage"
+git log --oneline</div>
+            <ul>
+              <li><strong>git add</strong>：把改动放进「暂存区」，准备提交</li>
+              <li><strong>git commit</strong>：在本地生成一条历史记录</li>
+              <li><strong>git log</strong>：查看已有 commit；若提示 <code>does not have any commits yet</code>，说明还没 commit 成功</li>
+            </ul>
+            <div class="tip-box">
+              <strong>我踩过的坑：</strong>运行 <code>git commit</code> 时不加 <code>-m</code> 会打开编辑器。
+              如果第一行留空，Git 会<strong>取消提交</strong>。新手建议直接用
+              <code>git commit -m "说明"</code>。
+            </div>
+          </article>
+
+          <article id="git-remote" class="learn-block glass">
+            <span class="status-badge">Step 3</span>
+            <h3>关联远程仓库</h3>
+            <p>本地 commit 完成后，还要告诉 Git：GitHub 上的仓库在哪里。</p>
+            <div class="code-block">git remote add origin https://github.com/QIII01/QIII01.github.io.git
+git remote -v</div>
+            <p>执行 <code>git remote -v</code> 后如果看到：</p>
+            <div class="code-block">origin  https://github.com/QIII01/QIII01.github.io.git (fetch)
+origin  https://github.com/QIII01/QIII01.github.io.git (push)</div>
+            <ul>
+              <li><strong>origin</strong>：远程仓库的别名，默认就叫 origin</li>
+              <li><strong>(fetch)</strong>：从这个地址拉取更新（<code>git pull</code> / <code>git fetch</code>）</li>
+              <li><strong>(push)</strong>：往这个地址上传提交（<code>git push</code>）</li>
+            </ul>
+            <p>两行地址一样，说明拉和推都指向同一个 GitHub 仓库，配置成功。</p>
+          </article>
+
+          <article id="git-push" class="learn-block glass">
+            <span class="status-badge">Step 4</span>
+            <h3>推送到 GitHub</h3>
+            <p>第一次推送建议带上 <code>-u</code>，以后在同一分支可以直接 <code>git push</code>：</p>
+            <div class="code-block">git push -u origin main</div>
+            <p>成功时终端会出现类似输出：</p>
+            <div class="code-block">branch 'main' set up to track 'origin/main'.</div>
+            <p>这表示本地 <code>main</code> 已经和远程 <code>origin/main</code> 关联好了。</p>
+            <div class="tip-box">
+              <strong>补充：</strong>第一次 push 可能需要登录 GitHub。HTTPS 方式下，密码栏通常要填
+              Personal Access Token（PAT），不是账号登录密码。
+            </div>
+          </article>
+
+          <article id="git-rejected" class="learn-block glass">
+            <span class="status-badge">Step 5</span>
+            <h3>push 被拒绝怎么办？</h3>
+            <p>如果看到：</p>
+            <div class="code-block">! [rejected] main -> main (fetch first)
+Updates were rejected because the remote contains work that you do not have locally.</div>
+            <p>
+              意思是：GitHub 上已经有 commit，而你本地是另一套历史（常见于从 GitHub 下载 ZIP 后重新
+              <code>git init</code>）。Git 不允许直接覆盖，所以 push 失败。
+            </p>
+            <p><strong>两种处理方式：</strong></p>
+            <ol>
+              <li>
+                <strong>以本地为准（个人项目常用）</strong>：确认本地是最新版本后，强制推送：
+                <div class="code-block">git push -u origin main --force</div>
+                成功时会看到 <code>(forced update)</code>。这会重写 GitHub 上的历史，协作项目要谨慎。
+              </li>
+              <li>
+                <strong>保留远程历史</strong>：先合并再推送：
+                <div class="code-block">git pull origin main --allow-unrelated-histories
+git push -u origin main</div>
+              </li>
+            </ol>
+            <div class="tip-box">
+              <strong>我的经历：</strong>因为文件是从 GitHub 下载 ZIP 得到的，本地重新 init 后历史对不上，
+              最后用 <code>--force</code> 推送成功。以后换电脑直接用 <code>git clone</code>，避免再走弯路。
+            </div>
+          </article>
+
+          <article id="git-new-pc" class="learn-block glass">
+            <span class="status-badge">Step 6</span>
+            <h3>换电脑怎么拉代码？</h3>
+            <p>新电脑上<strong>不要下载 ZIP</strong>，用 clone 一次到位：</p>
+            <div class="code-block">git config --global user.name "你的名字"
+git config --global user.email "你的邮箱"
+
+cd ~/Documents
+git clone https://github.com/QIII01/QIII01.github.io.git
+cd QIII01.github.io</div>
+            <p>clone 完成后你自动拥有：</p>
+            <ul>
+              <li>完整文件和 Git 历史</li>
+              <li>已配置好的 <code>origin</code> 远程</li>
+              <li>本地 <code>main</code> 跟踪 <code>origin/main</code></li>
+            </ul>
+            <p>改完代码后：</p>
+            <div class="code-block">git add .
+git commit -m "描述改了什么"
+git push</div>
+          </article>
+
+          <article id="git-daily" class="learn-block glass">
+            <span class="status-badge">Step 7</span>
+            <h3>日常更新流程</h3>
+            <p>网站改完后，固定三步：</p>
+            <div class="code-block">git add index.html          # 或 git add .
+git commit -m "update homepage"
+git push</div>
+            <p>常用检查命令：</p>
+            <div class="code-block">git status                  # 看哪些文件改了、有没有 staged
+git log --oneline           # 看提交历史
+git branch -vv              # 看本地分支是否跟踪远程</div>
+            <ul>
+              <li><strong>working tree clean</strong>：没有未提交的改动</li>
+              <li><strong>up to date with 'origin/main'</strong>：本地和 GitHub 已同步</li>
+            </ul>
+          </article>
+
+          <article id="git-zip-vs-clone" class="learn-block glass">
+            <span class="status-badge">Bonus</span>
+            <h3>ZIP 下载和 git clone 的区别</h3>
+            <table class="compare-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>git clone</th>
+                  <th>下载 ZIP</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>带 Git 历史</td>
+                  <td>✅ 有</td>
+                  <td>❌ 没有</td>
+                </tr>
+                <tr>
+                  <td>自带 remote</td>
+                  <td>✅ 有</td>
+                  <td>❌ 要手动 git init</td>
+                </tr>
+                <tr>
+                  <td>直接 push</td>
+                  <td>✅ 可以</td>
+                  <td>❌ 容易历史冲突</td>
+                </tr>
+                <tr>
+                  <td>适合换电脑</td>
+                  <td>✅ 推荐</td>
+                  <td>❌ 不推荐</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="tip-box">
+              <strong>一句话总结：</strong>想长期维护项目，永远优先 <code>git clone</code>；
+              ZIP 只适合「看一眼代码」，不适合当作开发起点。
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section id="contact" class="container reveal">
       <div class="contact glass">
         <div>
@@ -795,6 +1186,7 @@
             <span class="tag">二九</span>
             <span class="tag">个人博客</span>
             <span class="tag">学习记录</span>
+            <span class="tag">Git 笔记</span>
             <span class="tag">睡觉爱好者</span>
           </div>
         </div>
