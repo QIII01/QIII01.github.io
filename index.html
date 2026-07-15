@@ -274,6 +274,7 @@
       .column-card small {
         color: var(--muted);
       }
+      .more-chapters { color: var(--muted); font-size: 11px; }
       .search {
         height: 52px;
         display: flex;
@@ -648,7 +649,7 @@
     "date": "7月15日"
   }
 ];
-      let activeBlock = "全部";
+      let activeBlock = "";
       let activeChapter = "";
       const groups = () =>
         Object.groupBy
@@ -669,6 +670,10 @@
       });
       function render() {
         const g = groups();
+        if (!activeBlock) {
+          activeBlock = Object.keys(g)[0] || "";
+          activeChapter = chapters(g[activeBlock] || [])[0]?.name || "";
+        }
         noteCount.textContent = notes.length;
         columnCount.textContent = Object.keys(g).length;
         latest.innerHTML = notes
@@ -681,10 +686,10 @@
         columnGrid.innerHTML = Object.entries(g)
           .map(
             ([name, items], i) =>
-              `<article class="column-card"><div class="eyebrow">${String(i + 1).padStart(2, "0")}</div><h2>${name}</h2><ul>${chapters(items).map((c) => `<li><button class="link" onclick="selectColumn('${name}','${c.name}')">${String(c.order).padStart(2,"0")} · ${c.name}</button><small>${c.count} 篇</small></li>`).join("")}</ul><button class="link" onclick="selectBlock('${name}');show('articles')">进入专栏并选择章节</button></article>`,
+              `<article class="column-card"><div class="eyebrow">${String(i + 1).padStart(2, "0")}</div><h2>${name}</h2><ul>${chapters(items).slice(0,3).map((c) => `<li><button class="link" onclick="selectColumn('${name}','${c.name}')">${String(c.order).padStart(2,"0")} · ${c.name}</button><small>${c.count} 篇</small></li>`).join("")}${chapters(items).length>3?`<li class="more-chapters">还有 ${chapters(items).length-3} 章，进入专栏查看</li>`:""}</ul><button class="link" onclick="selectBlock('${name}');show('articles')">进入专栏并选择章节</button></article>`,
           )
           .join("");
-        tabs.innerHTML = ["全部", ...Object.keys(g)]
+        tabs.innerHTML = Object.keys(g)
           .map(
             (x) =>
               `<button class="${activeBlock === x ? "active" : ""}" onclick="selectBlock('${x}')">${x}</button>`,
@@ -697,7 +702,7 @@
       }
       function selectBlock(name) {
         activeBlock=name;
-        activeChapter=name === "全部" ? "" : (chapters(groups()[name] || [])[0]?.name || "");
+        activeChapter=chapters(groups()[name] || [])[0]?.name || "";
         search.value="";
         renderArticles();
       }
@@ -706,7 +711,7 @@
         const q = search.value.toLowerCase();
         const list = notes.filter(
           (n) =>
-            (activeBlock === "全部" || n.block === activeBlock) &&
+            n.block === activeBlock &&
             (!activeChapter || n.chapter === activeChapter) &&
             `${n.title} ${n.content} ${n.block} ${n.chapter}`
               .toLowerCase()
@@ -717,7 +722,7 @@
           .forEach((b) =>
             b.classList.toggle("active", b.textContent === activeBlock),
           );
-        const activeItems=activeBlock === "全部" ? [] : notes.filter((n)=>n.block===activeBlock);
+        const activeItems=notes.filter((n)=>n.block===activeBlock);
         const chapterList=chapters(activeItems);
         chapterTabs.hidden=!chapterList.length;
         chapterTabs.innerHTML=chapterList.map((c)=>`<button class="${activeChapter===c.name?"active":""}" onclick="activeChapter='${c.name}';search.value='';renderArticles()"><b>${String(c.order).padStart(2,"0")}</b><br>${c.name} · ${c.count} 篇</button>`).join("");
