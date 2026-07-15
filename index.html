@@ -167,12 +167,16 @@
         cursor: pointer;
       }
       .garden {
+        width: 100%;
+        border: 0;
         padding: 42px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         color: #fff;
         background: linear-gradient(145deg, #345e48, #1d382c);
+        text-align: left;
+        cursor: pointer;
       }
       .garden > div > span {
         color: #bacbc0;
@@ -309,6 +313,12 @@
         background: var(--green);
         color: #fff;
       }
+      .chapter-tabs { margin-top: -8px; padding: 16px; display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; background: #fff; border: 1px solid var(--line); border-radius: 12px; }
+      .chapter-tabs button { border: 1px solid var(--line); border-radius: 8px; padding: 12px; background: #fafbf9; text-align: left; cursor: pointer; }
+      .chapter-tabs button.active { background: var(--green); color: #fff; }
+      .reader { max-width: 860px; min-height: 70vh; margin: 34px auto 60px; padding: clamp(32px,7vw,78px); background: #fff; border: 1px solid var(--line); border-radius: 6px 28px 6px 6px; }
+      .reader h1 { margin: 55px 0 20px; font: 600 clamp(36px,6vw,62px)/1.2 Georgia,"Songti SC",serif; }
+      .reader-body { margin-top: 32px; color: #40443e; font-size: 16px; line-height: 2; white-space: pre-wrap; }
       .article-list {
         padding: 30px;
       }
@@ -479,7 +489,7 @@
             <p>你好，我是二九。这里收录我学习与实践中的笔记。</p>
             <button class="link" data-view="articles">开始阅读 →</button>
           </article>
-          <article class="garden">
+          <button class="garden" data-view="columns">
             <div>
               <span>知识花园</span><strong>把学过的事<br />整理成地图</strong>
             </div>
@@ -487,7 +497,8 @@
               <span><b id="noteCount">1</b> 篇文章</span
               ><span><b id="columnCount">1</b> 个专栏</span>
             </div>
-          </article>
+            <span style="color:#d6e1da;font-size:11px">浏览知识地图 →</span>
+          </button>
         </div>
         <section class="latest">
           <div class="eyebrow">RECENTLY UPDATED</div>
@@ -512,7 +523,11 @@
           >⌕<input id="search" placeholder="搜索文章、专栏或章节…"
         /></label>
         <nav class="tabs" id="tabs"></nav>
+        <nav class="chapter-tabs" id="chapterTabs" hidden></nav>
         <div class="article-list" id="articleList"></div>
+      </section>
+      <section id="reader" class="view">
+        <article class="reader"><button class="link" data-view="articles">← 返回文章列表</button><h1 id="readerTitle"></h1><div class="eyebrow" id="readerMeta"></div><div class="reader-body" id="readerBody"></div></article>
       </section>
       <section id="about" class="view">
         <div class="about">
@@ -539,18 +554,102 @@
         </div>
       </section>
     </main>
-    <footer><span>二九的知识页</span><span>记录 · 连接 · 生长</span></footer>
+    <footer><span>二九</span><span>记录 · 连接 · 实践</span></footer>
     <script>
       const notes = [
-        {
-          title: "段颀",
-          content: "段颀",
-          block: "随笔札记",
-          chapter: "未分章节",
-          date: "7月15日",
-        },
-      ];
-      let active = "全部";
+  {
+    "title": "完整实战：从零建立并发布一个项目",
+    "content": "# Git 零基础完整练习\n\n## 1. 创建项目\n\n`mkdir git-practice`\n\n`cd git-practice`\n\n`git init`\n\n## 2. 创建文件并提交\n\n创建 `README.md`，然后运行 `git add README.md` 和 `git commit -m \"初始化练习项目\"`。\n\n## 3. 使用分支\n\n`git switch -c feature/notes`\n\n修改文件后再次 add 和 commit。\n\n## 4. 合并主分支\n\n`git switch main`\n\n`git merge feature/notes`\n\n## 5. 推送到 GitHub\n\n创建空仓库后添加 origin，再运行 `git push -u origin main`。\n\n每日坚持查看 status、检查 diff、小步提交，并避免把密码和密钥放进仓库。",
+    "block": "Git 零基础教程",
+    "chapter": "第五章：撤销与实战",
+    "chapterOrder": 5,
+    "noteOrder": 2,
+    "date": "7月15日"
+  },
+  {
+    "title": "撤销操作：改错了也不用慌",
+    "content": "# 常见撤销操作\n\n撤销前先运行 `git status`，确认修改在哪个区域。\n\n放弃尚未暂存的修改：`git restore 文件名`\n\n移出暂存区但保留内容：`git restore --staged 文件名`\n\n修改最近一次提交：`git commit --amend -m \"新的说明\"`\n\n安全撤销已经共享的提交：`git revert 提交编号`\n\n`restore` 可能丢弃当前修改，执行前务必确认。`revert` 会创建新的反向提交，适合已经推送的历史。初学阶段不要随意对共享分支强制推送或重写历史。",
+    "block": "Git 零基础教程",
+    "chapter": "第五章：撤销与实战",
+    "chapterOrder": 5,
+    "noteOrder": 1,
+    "date": "7月15日"
+  },
+  {
+    "title": "同步远程修改：fetch、pull 与 push",
+    "content": "# 与远程仓库同步\n\n`git fetch origin` 只下载远程信息，不立即改动当前文件。\n\n`git pull` 通常相当于先 fetch，再把远程分支合并到当前分支。\n\n`git push` 把本地提交推送到远程。\n\n如果推送被拒绝，通常说明远程已经有新提交。先 pull，解决可能的冲突，再重新 push。\n\n## 推荐协作顺序\n\n1. 拉取最新代码\n2. 创建功能分支\n3. 小步提交\n4. 再次同步主分支\n5. 推送分支并发起 Pull Request",
+    "block": "Git 零基础教程",
+    "chapter": "第四章：远程仓库",
+    "chapterOrder": 4,
+    "noteOrder": 2,
+    "date": "7月15日"
+  },
+  {
+    "title": "连接 GitHub：clone、remote 与 push",
+    "content": "# 连接远程仓库\n\n克隆已有仓库：`git clone 仓库地址`\n\n为本地仓库添加远程地址：`git remote add origin 仓库地址`\n\n查看远程地址：`git remote -v`\n\n第一次推送：`git push -u origin main`\n\n`origin` 是远程仓库的常用别名。`-u` 会建立本地与远程分支的跟踪关系，以后通常只需 `git push`。\n\nGitHub 不接受账户密码直接推送，可使用浏览器授权、Personal Access Token 或 SSH 密钥。不要把令牌写进仓库文件。",
+    "block": "Git 零基础教程",
+    "chapter": "第四章：远程仓库",
+    "chapterOrder": 4,
+    "noteOrder": 1,
+    "date": "7月15日"
+  },
+  {
+    "title": "合并分支与解决冲突",
+    "content": "# 合并分支\n\n功能完成后运行：\n\n`git switch main`\n\n`git merge feature/login`\n\n合并成功后可删除分支：`git branch -d feature/login`\n\n## 解决冲突\n\n当两个分支修改同一文件的同一位置，Git 无法自动判断保留哪一份，就会标出冲突。手动整理成最终内容，删除 `<<<<<<<`、`=======`、`>>>>>>>` 标记，然后运行：\n\n`git add 冲突文件`\n\n`git commit`\n\n解决前先读懂两边修改，不要盲目选择一侧。",
+    "block": "Git 零基础教程",
+    "chapter": "第三章：分支与合并",
+    "chapterOrder": 3,
+    "noteOrder": 2,
+    "date": "7月15日"
+  },
+  {
+    "title": "分支是什么：安全地尝试新功能",
+    "content": "# 理解 Git 分支\n\n分支是一条独立开发路线，可以在不影响稳定 `main` 分支的情况下尝试新功能。\n\n查看分支：`git branch`\n\n创建并切换：`git switch -c feature/login`\n\n切回主分支：`git switch main`\n\n旧版 Git 也可以使用 `git checkout -b feature/login`。\n\n## 命名建议\n\n- `feature/功能名`：新功能\n- `fix/问题名`：修复问题\n- `docs/内容名`：文档修改\n\n一个分支尽量只完成一个目标，合并和审查都会更清楚。",
+    "block": "Git 零基础教程",
+    "chapter": "第三章：分支与合并",
+    "chapterOrder": 3,
+    "noteOrder": 1,
+    "date": "7月15日"
+  },
+  {
+    "title": "add、commit 与 log：完成第一次提交",
+    "content": "# 完成第一次提交\n\n暂存单个文件：`git add README.md`\n\n暂存当前目录全部修改：`git add .`\n\n创建提交：`git commit -m \"添加项目说明\"`\n\n查看历史：`git log --oneline`\n\n## 标准工作循环\n\n1. 修改文件\n2. 用 `git status` 检查\n3. 用 `git add` 选择修改\n4. 用 `git commit` 保存版本\n5. 继续下一项工作\n\n一次提交应表达一个完整变化。提交说明描述‘做了什么’，而不是笼统写‘修改一下’。提交先保存在本地，并不等于上传网络。",
+    "block": "Git 零基础教程",
+    "chapter": "第二章：基础工作流",
+    "chapterOrder": 2,
+    "noteOrder": 2,
+    "date": "7月15日"
+  },
+  {
+    "title": "创建仓库并认识 Git 状态",
+    "content": "# 创建第一个仓库\n\n进入项目目录后运行 `git init`。Git 会创建隐藏的 `.git` 目录，用来保存版本历史，不要手动修改它。\n\n## 查看状态\n\n运行 `git status`，它会告诉你哪些文件未被跟踪、哪些已经修改、哪些已经进入暂存区。\n\n创建一个 `README.md` 后再次查看状态，它会出现在 Untracked files 中。此时 Git 看见了文件，但还没有准备记录它。\n\n建议每进行一步操作就运行一次 `git status`，这是理解 Git 当前状态最快的方法。",
+    "block": "Git 零基础教程",
+    "chapter": "第二章：基础工作流",
+    "chapterOrder": 2,
+    "noteOrder": 1,
+    "date": "7月15日"
+  },
+  {
+    "title": "安装 Git 与第一次配置",
+    "content": "# 安装与配置 Git\n\n## 检查安装\n\n`git --version`\n\n看到版本号就说明已经安装。macOS 可安装 Xcode Command Line Tools 或使用 Homebrew；Windows 可从 Git 官网下载安装。\n\n## 设置身份\n\n`git config --global user.name \"你的名字\"`\n\n`git config --global user.email \"你的邮箱\"`\n\n查看配置：`git config --global --list`\n\n设置默认分支：`git config --global init.defaultBranch main`\n\n全局配置通常只需设置一次。单个项目也可以使用不带 `--global` 的命令覆盖。",
+    "block": "Git 零基础教程",
+    "chapter": "第一章：认识 Git",
+    "chapterOrder": 1,
+    "noteOrder": 2,
+    "date": "7月15日"
+  },
+  {
+    "title": "Git 是什么：先理解版本控制",
+    "content": "# Git 是什么？\n\nGit 是一个分布式版本控制工具。它记录文件每一次有意义的变化，让你能够查看历史、比较差异，并在出错时回到之前的状态。\n\n## 为什么学习 Git\n\n- 保存项目的多个版本，不再依赖‘最终版2’\n- 清楚知道什么时候修改了什么\n- 放心尝试新功能，随时可以回退\n- 与 GitHub、GitLab 等平台协作\n\n## 三个重要区域\n\n- 工作区：正在编辑的文件\n- 暂存区：准备放进下一次提交的修改\n- 仓库：已经正式保存的版本历史\n\nGit 是本地版本控制工具，GitHub 是托管 Git 仓库的网站。没有 GitHub 也可以在本地使用 Git。",
+    "block": "Git 零基础教程",
+    "chapter": "第一章：认识 Git",
+    "chapterOrder": 1,
+    "noteOrder": 1,
+    "date": "7月15日"
+  }
+];
+      let activeBlock = "全部";
+      let activeChapter = "";
       const groups = () =>
         Object.groupBy
           ? Object.groupBy(notes, (n) => n.block)
@@ -561,7 +660,7 @@
           .forEach((x) => x.classList.toggle("active", x.id === id));
         document
           .querySelectorAll(".top nav button")
-          .forEach((x) => x.classList.toggle("active", x.dataset.view === id));
+          .forEach((x) => x.classList.toggle("active", x.dataset.view === id || (id === "reader" && x.dataset.view === "articles")));
         scrollTo({ top: 0, behavior: "smooth" });
       }
       document.addEventListener("click", (e) => {
@@ -576,28 +675,39 @@
           .slice(0, 3)
           .map(
             (n) =>
-              `<button data-view="articles"><span>${n.date}</span><strong>${n.title}</strong><small>${n.block} · ${n.chapter} →</small></button>`,
+              `<button onclick="openReader(${notes.indexOf(n)})"><span>${n.date}</span><strong>${n.title}</strong><small>${n.block} · ${n.chapter} →</small></button>`,
           )
           .join("");
         columnGrid.innerHTML = Object.entries(g)
           .map(
             ([name, items], i) =>
-              `<article class="column-card"><div class="eyebrow">${String(i + 1).padStart(2, "0")}</div><h2>${name}</h2><ul>${[...new Set(items.map((n) => n.chapter))].map((c) => `<li><span>${c}</span><small>${items.filter((n) => n.chapter === c).length} 篇</small></li>`).join("")}</ul><button class="link" onclick="active='${name}';show('articles');renderArticles()">查看整个专栏</button></article>`,
+              `<article class="column-card"><div class="eyebrow">${String(i + 1).padStart(2, "0")}</div><h2>${name}</h2><ul>${chapters(items).map((c) => `<li><button class="link" onclick="selectColumn('${name}','${c.name}')">${String(c.order).padStart(2,"0")} · ${c.name}</button><small>${c.count} 篇</small></li>`).join("")}</ul><button class="link" onclick="selectBlock('${name}');show('articles')">进入专栏并选择章节</button></article>`,
           )
           .join("");
         tabs.innerHTML = ["全部", ...Object.keys(g)]
           .map(
             (x) =>
-              `<button class="${active === x ? "active" : ""}" onclick="active='${x}';renderArticles()">${x}</button>`,
+              `<button class="${activeBlock === x ? "active" : ""}" onclick="selectBlock('${x}')">${x}</button>`,
           )
           .join("");
         renderArticles();
       }
+      function chapters(items) {
+        return [...new Set(items.map((n) => n.chapter))].map((name) => { const related=items.filter((n)=>n.chapter===name); return {name,count:related.length,order:Math.min(...related.map((n)=>n.chapterOrder))}; }).sort((a,b)=>a.order-b.order||a.name.localeCompare(b.name,"zh-CN"));
+      }
+      function selectBlock(name) {
+        activeBlock=name;
+        activeChapter=name === "全部" ? "" : (chapters(groups()[name] || [])[0]?.name || "");
+        search.value="";
+        renderArticles();
+      }
+      function selectColumn(block,chapter) { activeBlock=block; activeChapter=chapter; search.value=""; show("articles"); renderArticles(); }
       function renderArticles() {
         const q = search.value.toLowerCase();
         const list = notes.filter(
           (n) =>
-            (active === "全部" || n.block === active) &&
+            (activeBlock === "全部" || n.block === activeBlock) &&
+            (!activeChapter || n.chapter === activeChapter) &&
             `${n.title} ${n.content} ${n.block} ${n.chapter}`
               .toLowerCase()
               .includes(q),
@@ -605,17 +715,22 @@
         tabs
           .querySelectorAll("button")
           .forEach((b) =>
-            b.classList.toggle("active", b.textContent === active),
+            b.classList.toggle("active", b.textContent === activeBlock),
           );
+        const activeItems=activeBlock === "全部" ? [] : notes.filter((n)=>n.block===activeBlock);
+        const chapterList=chapters(activeItems);
+        chapterTabs.hidden=!chapterList.length;
+        chapterTabs.innerHTML=chapterList.map((c)=>`<button class="${activeChapter===c.name?"active":""}" onclick="activeChapter='${c.name}';search.value='';renderArticles()"><b>${String(c.order).padStart(2,"0")}</b><br>${c.name} · ${c.count} 篇</button>`).join("");
         articleList.innerHTML = list.length
           ? list
               .map(
                 (n) =>
-                  `<article class="article"><span>${n.date}</span><div><small>${n.block} · ${n.chapter}</small><h2>${n.title}</h2><p>${n.content}</p></div></article>`,
+                  `<button class="article" onclick="openReader(${notes.indexOf(n)})"><span>${n.noteOrder === 999 ? "--" : String(n.noteOrder).padStart(2,"0")}</span><div><small>${n.block} · ${n.chapter}</small><h2>${n.title}</h2><p>${n.content.replace(/^#+\s/gm,"").slice(0,170)}</p></div></button>`,
               )
               .join("")
           : '<div class="empty">没有找到相关笔记</div>';
       }
+      function openReader(index) { const n=notes[index]; readerTitle.textContent=n.title; readerMeta.textContent=`${n.block} · ${n.chapter}`; readerBody.textContent=n.content; show("reader"); }
       search.addEventListener("input", renderArticles);
       render();
     </script>
